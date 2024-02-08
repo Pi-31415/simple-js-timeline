@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Responsive Vertical Timeline | CodyHouse</title>
+</head>
+<body>
+    <header class="cd-main-header text-center flex flex-column flex-center">
+        <h1>Responsive Vertical Timeline</h1>
+        <p class="margin-top-sm">A Dynamic Timeline</p>
+    </header>
+
+    <section class="cd-timeline js-cd-timeline">
+        <div class="container max-width-lg cd-timeline__container" id="timelineContainer">
+            <!-- Timeline blocks will be inserted here -->
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        // Sample JSON data
+        var timelineData = [
+            {
+                "date": "18 Feb, 2023",
+                "image": "",
+                "title": "Event Title 1",
+                "paragraph": "Description for event 1.",
+                "blockquote": "This is an important note.",
+                "color": "yellow"
+            },
+            
+            // Add more timeline objects here
+        ];
+
+        function createTimelineBlock(data) {
+            var container = document.createElement('div');
+            container.className = 'cd-timeline__block';
+
+            var imgContainer = document.createElement('div');
+            var imgClass = 'cd-timeline__img cd-timeline__img--' + (data.color || 'yellow');
+            imgContainer.className = imgClass;
+
+            var iconMap = {
+                red: 'cd-icon-movie.svg',
+                green: 'cd-icon-picture.svg',
+                yellow: 'cd-icon-location.svg'
+            };
+
+            var imgSrc = 'assets/img/' + (iconMap[data.color] || iconMap['yellow']);
+            var img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = data.title;
+
+            imgContainer.appendChild(img);
+            container.appendChild(imgContainer);
+
+            var contentContainer = document.createElement('div');
+            contentContainer.className = 'cd-timeline__content text-component';
+
+            var title = document.createElement('h2');
+            title.textContent = data.title;
+            contentContainer.appendChild(title);
+
+            var paragraph = document.createElement('p');
+            paragraph.className = 'color-contrast-medium';
+            paragraph.textContent = data.paragraph;
+            contentContainer.appendChild(paragraph);
+
+            if (data.blockquote) {
+                var blockquote = document.createElement('blockquote');
+                blockquote.style.backgroundColor = '#eee'; // Grey background
+                blockquote.style.color = '#ff6b6b'; // Light red color
+                blockquote.style.fontWeight = 'bold'; // Bold text
+                blockquote.style.padding = '1rem'; // Add some padding
+                blockquote.textContent = data.blockquote;
+                contentContainer.appendChild(blockquote);
+            }
+
+            if (data.image) {
+                var imageElement = document.createElement('img');
+                imageElement.src = data.image;
+                contentContainer.appendChild(imageElement);
+            }
+
+            var dateSpan = document.createElement('span');
+            dateSpan.className = 'cd-timeline__date';
+            dateSpan.textContent = data.date;
+            contentContainer.appendChild(dateSpan);
+
+            container.appendChild(contentContainer);
+            return container;
+        }
+
+        function loadTimeline() {
+            var timelineContainer = document.getElementById('timelineContainer');
+            timelineData.forEach(function(data) {
+                var block = createTimelineBlock(data);
+                timelineContainer.appendChild(block);
+            });
+        }
+
+        loadTimeline();
+    </script>
+</body>
+</html>
